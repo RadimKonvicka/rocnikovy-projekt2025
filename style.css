@@ -1,0 +1,104 @@
+body {
+    padding: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: #01315e;
+    height: 100vh;
+    overflow: hidden;
+}
+  h1 {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 0px 70px 70px 70px ;
+    font-size: 100px;
+    font-weight: bold;
+    text-align: center;
+    color: #6859b9;
+    margin-bottom: 200px;
+    padding-top: -20px;
+    
+}
+
+h2 {font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 20px ;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+    color: #0fdfd4;
+    margin-bottom: 50px;
+    padding-top: -100px;
+
+}
+
+#easy-btn {
+  background-color: limegreen;
+}
+#medium-btn {
+  background-color: orange;
+}
+#hard-btn {
+  background-color: red;
+}
+
+#reload{
+    text-align: left;
+}
+
+canvas {
+    box-shadow: 150px 150px 150px 150px #2403b8;
+    border: 3px solid #ffffff;
+    border-radius: 40px;
+}
+
+#pole {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+button {
+    background-color: #6859b9;
+    color: white;
+    border: rgb(255, 255, 255);
+    padding: 10px 25px;
+    font-size: 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#start-button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 40px;
+  font-size: 24px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+#difficulty-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px; 
+  margin-bottom: 50px;
+}
+
+
+button:hover {
+    color: #001F3F;
+    background-color: #fff;
+    transition: all .5s ease;
+    font-size: 31px;
+    padding: auto;
+}
+
+button:not(:hover){
+    color: white;
+    background-color: #6859b9;
+    font-size: 30px;
+    transition: all .5s ease;
+}
+

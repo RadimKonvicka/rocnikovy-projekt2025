@@ -1,1 +1,1 @@
-# rocnikovy-projekt2025
+# rocnikovy-proj

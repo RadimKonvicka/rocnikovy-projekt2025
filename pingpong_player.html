@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ping Pong proti hráči</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  <script src="pingpong_player.js"></script>
+  <script>
+    const hraProtiRobotovi = false;
+  </script>
+</head>
+<body>
+  <button id="reload"><img src="./img/reload.png" alt=""><a href="pingpong_player.html"></a></button>
+  <h2>Ping Pong proti hráči</h2>
+  <div id="pole"></div>
+  <div id="difficulty-buttons">
+    <button class="diff-btn" id="easy-btn">EASY</button>
+  <button class="diff-btn" id="medium-btn">MEDIUM</button>
+  <button class="diff-btn" id="hard-btn">HARD</button>
+  </div>
+  <p>Skóre hráče 1: <span id="player1-score">0</span></p>
+  <p>Skóre hráče 2: <span id="player2-score">0</span></p>
+  <button id="start-button">START</button>
+  
+  
+</div>
+</body>
+</html>
