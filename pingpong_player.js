@@ -1,162 +1,42 @@
-let levaPalka;  
-let pravaPalka; 
-let micek;      
+let levaPalka;
+let pravaPalka;
+let micek;
 let winSound = new Audio('./win.mp3');
 let bounceSound = new Audio('./bounce.mp3');
 let pointSound = new Audio('./point.mp3');
 let hraBezi = false;
-let obtiznost = "easy"; // výchozí režim
-let rychlostNarazu = 0; // přidává se při nárazu podle obtížnosti
+let obtiznost = "easy";
+let rychlostNarazu = 0;
 
-
-
-const sirka = 1000;  
-const vyska = 500;   
-
-let hrac1 = 0;  
-let hrac2 = 0;  
+const sirka = 1000;
+const vyska = 500;
+let hrac1 = 0;
+let hrac2 = 0;
 const maxSkore = 5;
 
 window.onload = function () {
   const btn = document.getElementById("start-button");
   const pole = document.getElementById("pole");
 
-  btn.addEventListener("click", function () {
-    hraBezi = true;
-    btn.style.display = "none";
-  });
+  const infoBtn = document.getElementById("info-button");
+const popup = document.getElementById("popup");
+const closePopup = document.getElementById("close-popup");
 
-  // obtížnostní tlačítka
-  document.querySelectorAll(".diff-btn").forEach(button => {
-    button.addEventListener("click", function () {
-      obtiznost = this.dataset.mode;
-      switch (obtiznost) {
-        case "easy":
-          rychlostNarazu = 0;
-          break;
-        case "medium":
-          rychlostNarazu = 0.2;
-          break;
-        case "hard":
-          rychlostNarazu = 0.5;
-          break;
-      }
-
-      // zvýraznění vybraného tlačítka
-      document.querySelectorAll(".diff-btn").forEach(b => b.classList.remove("active"));
-      this.classList.add("active");
-    });
-  });
-};
-
-
-
-class Palka1 {
-  constructor(x, y) {
-    this.x = x;         
-    this.y = y;         
-    this.sirka = 20;    
-    this.vyska = 100;   
-    this.rychlost = 11;  
-  }
-  vykresli() {
-    fill(255, 0, 0);    
-    rect(this.x, this.y, this.sirka, this.vyska);
-  }
-  pohyb(move) {
-    this.y = constrain(this.y + move * this.rychlost, 0, vyska - this.vyska);
-  }
-}
-
-class Palka2 {
-    constructor(x, y) {
-      this.x = x;         
-      this.y = y;         
-      this.sirka = 20;    
-      this.vyska = 100;   
-      this.rychlost = 11;  
-    }
-    vykresli() {
-      fill(0, 0, 255);    
-      rect(this.x, this.y, this.sirka, this.vyska);
-    }
-    pohyb(move) {
-      this.y = constrain(this.y + move * this.rychlost, 0, vyska - this.vyska);
-    }
-  }
-
-class Micek {
-  constructor() {
-    this.rychlostMicek = 6;     
-      this.x = sirka / 2;         
-    this.y = vyska / 2;         
-    this.prumer = 20;           
-    this.rychlostX = this.rychlostMicek; 
-    this.rychlostY = this.rychlostMicek; 
-  }
-
-  vykresli() {                  
-    fill(255, 255, 255);         
-    ellipse(this.x, this.y, this.prumer); 
-  }
-
-  aktualizuj() {                 
-    this.x += this.rychlostX;    
-    this.y += this.rychlostY;    
-    if (this.y <= 0 || this.y >= vyska) {
-      this.rychlostY *= -1.10;      
-    }
-  }
-
-  naraz(palka) {                 
-    return (
-      this.x - this.prumer / 2 <= palka.x + palka.sirka &&  
-      this.x + this.prumer / 2 >= palka.x &&                
-      this.y >= palka.y &&                                  
-      this.y <= palka.y + palka.vyska   
-    );
-  }
-
-  mimoHriste() {                 
-    return this.x <= 0 || this.x >= sirka;  
-  }
-}
-
-document.getElementById("easy-btn").addEventListener("click", function () {
-  this.classList.toggle("active");
+infoBtn.addEventListener("click", () => {
+  popup.style.display = "flex";
 });
 
-function points() {
-  textSize(32);                      
-  fill(255);                          
-  textAlign(CENTER, TOP);             
-  text(`${hrac1} : ${hrac2}`, sirka / 2, 10);
-}
+closePopup.addEventListener("click", () => {
+  popup.style.display = "none";
+});
 
-function updateScores() {
-  let player1Element = document.getElementById('player1-score'); 
-  let player2Element = document.getElementById('player2-score'); 
-
-  if (player1Element && player2Element) {
-    player1Element.textContent = hrac1;    
-    player2Element.textContent = hrac2;    
-  } else {
-    console.error("Elementy pro skóre nebyly nalezeny.");
+// Aby popup šel zavřít i kliknutím mimo obsah
+popup.addEventListener("click", (e) => {
+  if (e.target === popup) {
+    popup.style.display = "none";
   }
-}
+});
 
-function setup() {
-  let holder = document.getElementById("pole");                      
-  let canvas = createCanvas(sirka, vyska);       
-  canvas.parent(holder);                         
-  levaPalka = new Palka1(10, vyska / 2 - 50);     
-  pravaPalka = new Palka2(sirka - 30, vyska / 2 - 50);
-  micek = new Micek();                      
-  }
-
-  window.onload = function () {
-  const btn = document.getElementById("start-button");
-  const pole = document.getElementById("pole");
 
   btn.addEventListener("click", function () {
     hraBezi = true;
@@ -164,71 +44,165 @@ function setup() {
     pole.classList.remove("blur");
   });
 
-  // Při načtení stránky přidáme blur
-  pole.classList.add("blur");
+  document.getElementById('reload').addEventListener('click', () => {
+  location.reload();
+});
+
+  document.querySelectorAll(".diff-btn").forEach(button => {
+  button.addEventListener("click", function () {
+    obtiznost = this.dataset.mode;
+
+    // základní rychlost míčku
+    let zakladniRychlostX = 6;
+    let zakladniRychlostY = 6;
+
+    switch (obtiznost) {
+      case "easy":
+        micek.rychlostX = (micek.rychlostX < 0 ? -zakladniRychlostX : zakladniRychlostX);
+        micek.rychlostY = (micek.rychlostY < 0 ? -zakladniRychlostY : zakladniRychlostY);
+        break;
+      case "medium":
+        micek.rychlostX = (micek.rychlostX < 0 ? -zakladniRychlostX * 1.6 : zakladniRychlostX * 1.6);
+        micek.rychlostY = (micek.rychlostY < 0 ? -zakladniRychlostY * 1.6 : zakladniRychlostY * 1.6);
+        break;
+      case "hard":
+        micek.rychlostX = (micek.rychlostX < 0 ? -zakladniRychlostX * 2.2 : zakladniRychlostX * 2.2);
+        micek.rychlostY = (micek.rychlostY < 0 ? -zakladniRychlostY * 2.2 : zakladniRychlostY * 2.2);
+        break;
+    }
+  });
+});
+
 };
 
+class Palka {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.sirka = 20;
+    this.vyska = 100;
+    this.rychlost = 11;
+  }
+  vykresli(barva) {
+    fill(barva);
+    rect(this.x, this.y, this.sirka, this.vyska);
+  }
+  pohyb(smer) {
+    this.y = constrain(this.y + smer * this.rychlost, 0, vyska - this.vyska);
+  }
+}
+
+class Micek {
+  constructor() {
+    this.prumer = 20;
+    this.reset();
+  }
+
+  reset() {
+    this.x = sirka / 2;
+    this.y = vyska / 2;
+    this.rychlostX = random([-1, 1]) * 6;
+    this.rychlostY = random([-1, 1]) * 6;
+  }
+
+  vykresli() {
+    fill(255);
+    ellipse(this.x, this.y, this.prumer);
+  }
+
+  aktualizuj() {
+    this.x += this.rychlostX;
+    this.y += this.rychlostY;
+    if (this.y <= 0 || this.y >= vyska) {
+      this.rychlostY *= -1;
+    }
+  }
+
+  naraz(palka) {
+    return (
+      this.x - this.prumer / 2 <= palka.x + palka.sirka &&
+      this.x + this.prumer / 2 >= palka.x &&
+      this.y >= palka.y &&
+      this.y <= palka.y + palka.vyska
+    );
+  }
+
+  mimoHriste() {
+    return this.x <= 0 || this.x >= sirka;
+  }
+}
+
+function setup() {
+  let holder = document.getElementById("pole");
+  let canvas = createCanvas(sirka, vyska);
+  canvas.parent(holder);
+  levaPalka = new Palka(10, vyska / 2 - 50);
+  pravaPalka = new Palka(sirka - 30, vyska / 2 - 50);
+  micek = new Micek();
+}
 
 function draw() {
-  background(0); 
+  background(0);
+
   if (!hraBezi) {
-  levaPalka.vykresli();
-  pravaPalka.vykresli();
+    levaPalka.vykresli(color(255, 0, 0));
+    pravaPalka.vykresli(color(0, 0, 255));
+    micek.vykresli();
+    zobrazSkore();
+    return;
+  }
+
+  zobrazSkore();
+
+  levaPalka.vykresli(color(255, 0, 0));
+  pravaPalka.vykresli(color(0, 0, 255));
   micek.vykresli();
-  points();
-  return;
-}
-         
-  points();               
-
-  pravaPalka.vykresli();
-  levaPalka.vykresli();    
-  pravaPalka.vykresli();   
-  micek.vykresli();        
-  micek.aktualizuj();      
-
+  micek.aktualizuj();
 
   if (micek.naraz(levaPalka) || micek.naraz(pravaPalka)) {
-  micek.rychlostX *= -1;
-  if (obtiznost !== "easy") {
-    micek.rychlostX += Math.sign(micek.rychlostX) * rychlostNarazu;
+    micek.rychlostX *= -rychlostNarazu || -1;
+    pointSound.play();
   }
-  pointSound.play();
-}
- 
-  
-  if (micek.mimoHriste()) { 
+
+  if (micek.mimoHriste()) {
     if (micek.x <= 0) {
-      hrac2++;             
-    } else if (micek.x >= sirka) {
-      hrac1++;             
+      hrac2++;
+    } else {
+      hrac1++;
     }
     bounceSound.play();
-    micek = new Micek();   
-    updateScores();        
+    micek.reset();
+    updateScores();
   }
 
   if (hrac1 >= maxSkore || hrac2 >= maxSkore) {
     noLoop();
     background(0);
-    fill(255); 
-    textFont("Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif", 32)                         
-    textAlign(CENTER, TOP);      
-    winSound.play();       
-    text("%s VYHRÁL!".replace("%s", hrac1 >= maxSkore ? "ČERVENÝ HRÁČ" : "MODRÝ HRÁČ"), sirka / 2, vyska / 2);
+    fill(255);
+    textSize(32);
+    textAlign(CENTER, TOP);
+    winSound.play();
+    text(`${hrac1 >= maxSkore ? "ČERVENÝ HRÁČ" : "MODRÝ HRÁČ"} VYHRÁL!`, sirka / 2, vyska / 2);
   }
 
-  if (keyIsDown(87)) {     
-    levaPalka.pohyb(-1);
-  }
-  if (keyIsDown(83)) {     
-    levaPalka.pohyb(1);
-  }
-  if (keyIsDown(UP_ARROW)) {     
-    pravaPalka.pohyb(-1);
-  }
-     if (keyIsDown(DOWN_ARROW)) {     
-        pravaPalka.pohyb(1);
-    }
+  if (keyIsDown(87)) levaPalka.pohyb(-1);
+  if (keyIsDown(83)) levaPalka.pohyb(1);
+  if (keyIsDown(UP_ARROW)) pravaPalka.pohyb(-1);
+  if (keyIsDown(DOWN_ARROW)) pravaPalka.pohyb(1);
 }
-  
+
+function zobrazSkore() {
+  textSize(32);
+  fill(255);
+  textAlign(CENTER, TOP);
+  text(`${hrac1} : ${hrac2}`, sirka / 2, 10);
+}
+
+function updateScores() {
+  let p1 = document.getElementById('player1-score');
+  let p2 = document.getElementById('player2-score');
+  if (p1 && p2) {
+    p1.textContent = hrac1;
+    p2.textContent = hrac2;
+  }
+}
