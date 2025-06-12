@@ -13,12 +13,25 @@
 </head>
 <body>
   <button id="reload"><img src="./img/reload.png" alt=""><a href="pingpong_player.html"></a></button>
+  <button id="info-button"><img src="./img/info.png" alt=""></button>
+
+<div id="popup" class="popup-hidden">
+  <div class="popup-content">
+    <span id="close-popup">&times;</span>
+    <h3>Informace</h3>
+    <p>
+      Red player: W - UP <br> S - DOWN
+    </p>
+  </div>
+</div>
+
   <h2>Ping Pong proti hráči</h2>
   <div id="pole"></div>
   <div id="difficulty-buttons">
-    <button class="diff-btn" id="easy-btn">EASY</button>
-  <button class="diff-btn" id="medium-btn">MEDIUM</button>
-  <button class="diff-btn" id="hard-btn">HARD</button>
+    <button class="diff-btn" id="easy-btn" data-mode="easy">EASY</button>
+<button class="diff-btn" id="medium-btn" data-mode="medium">MEDIUM</button>
+<button class="diff-btn" id="hard-btn" data-mode="hard">HARD</button>
+
   </div>
   <p>Skóre hráče 1: <span id="player1-score">0</span></p>
   <p>Skóre hráče 2: <span id="player2-score">0</span></p>
